@@ -26,10 +26,13 @@ NEW_LINE="GRUB_CMDLINE_LINUX="rootdelay=300 console=ttyS0 earlyprintk=ttyS0 net.
 echo "Changing the GRUB Configuration to allow console access"
 sed -i 's/^GRUB_CMDLINE_LINUX=.*/'"$NEW_LINE"'/' /etc/default/grub
 
+# Activate the TTY
+sudo stty -F /dev/ttyS0 speed 9600
+
 # Restart GRUB config
 echo "Restart GRUB config"
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
-
+sudo systemctl start getty@ttyS
 
 # Install the Linux Agent
 echo "Installing the Linux Agent..."
