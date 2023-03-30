@@ -33,9 +33,11 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 echo "Installing the Linux Agent..."
 sudo yum install python-pyasn1 WALinuxAgent
 sudo systemctl enable waagent
-
-
 echo "Install of Linux Agent complete"
+
+echo "Installing Cloud Config"
+sudo yum install -y cloud-init cloud-utils-growpart gdisk hyperv-daemons
+
 echo "Implementing the required configuration changes in Azure Agent configuration"
 sudo sed -i 's/Provisioning.Agent=auto/Provisioning.Agent=auto/g' /etc/waagent.conf
 sudo sed -i 's/ResourceDisk.Format=y/ResourceDisk.Format=n/g' /etc/waagent.conf
@@ -63,10 +65,10 @@ rm /mnt/resource/swapfile -f
 fi
 
 echo "Add console log file"
-cat >> /etc/cloud/cloud.cfg.d/05_logging.cfg <<EOF
+sudo cat >> /etc/cloud/cloud.cfg.d/05_logging.cfg <<EOF
 
 # This tells cloud-init to redirect its stdout and stderr to
-# 'tee -a /var/log/cloud-init-output.log' so the user can see output
+# 'tee -a /var/log/cloud-init-output.log' so the use can see output
 # there without needing to look on the console.
 output: {all: '| tee -a /var/log/cloud-init-output.log'}
 EOF

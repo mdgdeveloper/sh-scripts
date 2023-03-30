@@ -1,3 +1,12 @@
+#!/bin/bash
+# ----------------------------------
+# Azure Agent Installation
+# Process ready only for CentOS 7 
+# Created on: 29.03.23
+# Creted by: Sergio Madrigal
+# ----------------------------------
+
+
 echo "Installing Cloud Config"
 sudo yum install -y cloud-init cloud-utils-growpart gdisk hyperv-daemons
 
