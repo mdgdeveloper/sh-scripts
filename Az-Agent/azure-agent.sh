@@ -19,7 +19,7 @@ sudo yum clean all
 # Replace GRUB_CMDLINE_LINUX="rootdelay=300 console=ttyS0 earlyprintk=ttyS0 net.ifnames=0"
 # Define the new text
 # NEW_LINE='GRUB_CMDLINE_LINUX="spectre_v2=retpoline rd.lvm.lv=centos/root rd.lvm.lv=centos/swap net.iframes=0 rootdelay=300 console=ttyS0,115200 earlyprintk=ttyS0,115200 net.ifnames=0"'
-NEW_LINE="GRUB_CMDLINE_LINUX="rootdelay=300 console=ttyS0 earlyprintk=ttyS0 net.ifnames=0"
+NEW_LINE='GRUB_CMDLINE_LINUX="rootdelay=300 console=ttyS0 earlyprintk=ttyS0 net.ifnames=0"'
 
 
 # Use sed to replace the line in the file
