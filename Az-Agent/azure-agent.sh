@@ -7,9 +7,12 @@
 # ----------------------------------
 
 
-# Define properly the 
+# Allow execution of Yum
+echo "Changing the Yum Packet Manager privileges"
+sudo chmod 700 /usr/bin/yum 
 
 # Clean Yum
+echo "Cleaning the Yum repo"
 sudo yum clean all
 
 # /etc/default/grub
@@ -18,16 +21,22 @@ sudo yum clean all
 NEW_LINE='GRUB_CMDLINE_LINUX="spectre_v2=retpoline rd.lvm.lv=centos/root rd.lvm.lv=centos/swap net.iframes=0 rootdelay=300 console=ttyS0 earlyprintk=ttyS0 net.ifnames=0"'
 
 # Use sed to replace the line in the file
+echo "Changing the GRUB Configuration to allow console access"
 sed -i 's/^GRUB_CMDLINE_LINUX=.*/'"$NEW_LINE"'/' /etc/default/grub
 
-# Restart Grup config
+# Restart GRUB config
+echo "Restart GRUB config"
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
 
 # Install the Linux Agent
+echo "Installing the Linux Agent..."
 sudo yum install python-pyasn1 WALinuxAgent
 sudo systemctl enable waagent
 
+
+echo "Install of Linux Agent complete"
+echo "Implementing the required configuration changes in Azure Agent configuration"
 sudo sed -i 's/Provisioning.Agent=auto/Provisioning.Agent=auto/g' /etc/waagent.conf
 sudo sed -i 's/ResourceDisk.Format=y/ResourceDisk.Format=n/g' /etc/waagent.conf
 sudo sed -i 's/ResourceDisk.EnableSwap=y/ResourceDisk.EnableSwap=n/g' /etc/waagent.conf
