@@ -36,7 +36,7 @@ sudo systemctl start getty@ttyS
 
 # Install the Linux Agent
 echo "Installing the Linux Agent..."
-sudo yum install python-pyasn1 WALinuxAgent
+sudo yum install -y python-pyasn1 WALinuxAgent
 sudo systemctl enable waagent
 echo "Install of Linux Agent complete"
 
